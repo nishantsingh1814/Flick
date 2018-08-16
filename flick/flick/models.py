@@ -1,9 +1,24 @@
 from django.db import models
 from django.utils import timezone
 import time
+from django.contrib.auth.models import(
+    BaseUserManager, AbstractBaseUser
+)
+from .signals import user_password_update
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 def get_image_path(instance, filename):
     return 'images/{0}_{1}'.format(str(time.time()).replace('.', ''), filename)
+
+class User(AbstractBaseUser):
+
+    class Meta:
+        db_table = 'user'
+
+    user_name = models.CharField(max_length=17, unique=True)
+    password = models.CharField(max_length=100, blank=False, null=False)
+    USERNAME_FIELD = 'user_name'
 
 class BaseModel(models.Model):
     """
@@ -59,3 +74,8 @@ class GroupPhotos(BaseModel):
         db_table = 'group_photos'
     group = models.ForeignKey(Groups, on_delete = models.CASCADE )
     photo = models.ForeignKey(Photos, on_delete = models.CASCADE )
+
+@receiver(user_password_update)
+def create_auth_token(sender, instance=None, **kwargs):
+    token = Token.objects.filter(user=instance).delete()
+    Token.objects.create(user=instance)

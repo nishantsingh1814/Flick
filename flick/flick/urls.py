@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import DownloadGroups, GetGroupPhotos, PhotoInfo, GetGroups, GetPhotos
+from .views import DownloadGroups, GetGroupPhotos, PhotoInfo, GetGroups, GetPhotos, Login, SignUp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('photoinfo', PhotoInfo.as_view()),
     path('getgroups', GetGroups.as_view()),
     path('getphotos', GetPhotos.as_view()),
-
+    path('login/', Login.as_view()),
+    path('signup/', SignUp.as_view()),
 ]

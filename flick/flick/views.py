@@ -18,8 +18,69 @@ from rest_framework import serializers
 from rest_framework.settings import api_settings
 
 
-from .models import Groups, Photos, PhotoTags, GroupPhotos
+from .models import Groups, Photos, PhotoTags, GroupPhotos, User
 from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer
+from rest_framework.authtoken.models import Token
+from .signals import user_password_update
+
+class SignUp(APIView):
+    authentication_classes = []
+    permission_classes = []
+    def post(self, request, format=None):
+        try:
+            data = request.data.dict()
+            user_name = data.pop('user_name')
+            password = data.pop('password')
+
+            if not user_name:
+                raise ValueError('Username not found')
+            if not password:
+                raise ValueError('Password not found')
+            try:
+                user = User.objects.get(user_name=user_name)
+                if user:
+                    raise ValueError('User already exists')
+            except User.DoesNotExist:
+                user = User.objects.create(user_name=user_name,password=password)
+                response = {'status': status.HTTP_200_OK, 'message': 'success'}
+
+
+
+        except ValueError as err:
+            response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
+
+        return Response(response, status=response['status'])
+
+class Login(APIView):
+    authentication_classes = []
+    permission_classes = []
+    def post(self, request, format=None):
+        try:
+            data = request.data.dict()
+            user_name = data.pop('user_name')
+            password = data.pop('password')
+
+            if not user_name:
+                raise ValueError('Username not found')
+            if not password:
+                raise ValueError('Password not found')
+            user = User.objects.get(user_name=user_name)
+
+            if user:
+                if user.password == password:
+                    user_password_update.send(sender="User", instance=user)
+                    token = Token.objects.get(user_id=user.id)
+                    response = {'token': token.key, 'status': status.HTTP_200_OK}
+                else:
+                    raise ValueError('Invalid Credentials')
+            else:
+                raise ValueError('User not found')
+
+        except ValueError as err:
+            response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
+
+        return Response(response, status=response['status'])
+
 
 class PaginationAPIView(APIView):
     """

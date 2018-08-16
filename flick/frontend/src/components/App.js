@@ -1,14 +1,25 @@
-import React from "react";
+import React, {Component} from "react";
 import ReactDOM from "react-dom";
-import GroupDataProvider from './Group/GroupDataProvider';
-import GroupList from './Group/GroupList';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Group from '../components/Group/Group';
 
-import ImageDataProvider from './Gallery/ImageDataProvider';
-import ImageList from './Gallery/ImageList';
+import Gallery from '../components/Gallery/Gallery';
 
-const App = () => (
-  <ImageDataProvider endpoint="/getphotos?group_id=27"
-                render={data => <ImageList data={data} />} />
-);
+
+
+class App extends Component{
+  render(){
+    return(
+      <BrowserRouter>
+        <Switch>
+
+            <Route exact path="/" component={Group}/>
+            <Route exact path="/gallery/:id" component={Gallery}/>
+
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
 const wrapper = document.getElementById("app");
 wrapper ? ReactDOM.render(<App />, wrapper) : null;

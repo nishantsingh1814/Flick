@@ -4,26 +4,35 @@ import PropTypes from "prop-types";
 class ImageDataProvider extends Component {
   static propTypes = {
     endpoint: PropTypes.string.isRequired,
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
   };
   state = {
-      data: [],
+      images: [],
       loaded: false,
-      placeholder: "Loading..."
+      isLoading:true,
+      placeholder: "Loading...",
+      endpoint: this.props.endpoint
     };
   componentDidMount() {
-    fetch(this.props.endpoint)
+    this.onPaginatedSearch();
+  }
+
+  onPaginatedSearch =()=>{
+    this.setState({ isLoading:true});
+    if(this.state.endpoint!=null){
+    fetch(this.state.endpoint)
       .then(response => {
         if (response.status !== 200) {
-          return this.setState({ placeholder: "Something went wrong" });
+          return this.setState({ placeholder: "Something went wrong" , isLoading:false});
         }
         return response.json();
       })
-      .then( data => this.setState({ data: data, loaded: true }));
+      .then( data => this.setState({ images: this.state.images.concat(data.results), loaded: true, isLoading:false, endpoint:data.next }));
+    }
   }
   render() {
-    const { data, loaded, placeholder } = this.state;
-    return loaded ? this.props.render(data) : <p>{placeholder}</p>;
+    const { images, loaded, placeholder, isLoading } = this.state;
+    return loaded ? this.props.render(images, this.onPaginatedSearch, isLoading) : <p>{placeholder}</p>;
   }
 }
 export default ImageDataProvider;

@@ -11,6 +11,7 @@ class GroupDataProvider extends Component {
       loaded: false,
       placeholder: "Loading..."
     };
+
   componentDidMount() {
     fetch(this.props.endpoint)
       .then(response => {

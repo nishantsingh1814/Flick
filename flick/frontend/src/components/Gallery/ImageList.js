@@ -5,7 +5,11 @@ import '../../css/gallery.css';
 class ImageList extends Component{
   constructor(props){
     super(props)
-    this.imageItems = props.data.results.map((image, index) => {
+  }
+  updateImages=()=>{
+    console.log("knb")
+    return  this.props.images.map((image, index) => {
+      console.log(index);
       return(
         <div>
           <Image
@@ -17,21 +21,23 @@ class ImageList extends Component{
     });
   }
   createColumns= () =>{
+    console.log("col")
+    let imageItems= this.updateImages();
     let imagesFirst = [];
     let imagesSec = [];
     let imagesThird = [];
     let imagesFourth = [];
 
     let column = [];
-    for(let i=0; i<this.imageItems.length; i++){
+    for(let i=0; i<imageItems.length; i++){
       if(i%4==0){
-        imagesFirst.push(this.imageItems[i]);
+        imagesFirst.push(imageItems[i]);
       }else if(i%4==1){
-        imagesSec.push(this.imageItems[i]);
+        imagesSec.push(imageItems[i]);
       }else if(i%4==2){
-        imagesThird.push(this.imageItems[i]);
+        imagesThird.push(imageItems[i]);
       }else if(i%4==3){
-        imagesFourth.push(this.imageItems[i]);
+        imagesFourth.push(imageItems[i]);
       }
     }
     column.push(<div className="d-flex flex-column">{imagesFirst}</div>);
@@ -39,6 +45,22 @@ class ImageList extends Component{
     column.push(<div className="d-flex flex-column">{imagesThird}</div>);
     column.push(<div className="d-flex flex-column">{imagesFourth}</div>);
     return column
+  }
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+
+  onScroll = () => {
+    if (
+      (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+      this.props.images.length && !this.props.isLoading
+    ) {
+      this.props.onPaginatedSearch();
+    }
   }
   render(){
     return (

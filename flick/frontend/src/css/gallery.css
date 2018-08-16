@@ -1,0 +1,14 @@
+.flex-column {
+    max-width : 260px;
+    margin: 5px;
+}
+.flex-row{
+  margin:auto;
+}
+
+img {
+    margin: 5px;
+}
+.container {
+    background: #f9f9f9;
+}

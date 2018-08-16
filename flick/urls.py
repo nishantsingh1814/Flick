@@ -1,0 +1,9 @@
+from django.urls import path
+from django.conf.urls import include
+from django.conf.urls.static import static
+from django.conf import settings
+
+urlpatterns = [
+    path('', include('flick.urls')),
+    path('', include('frontend.urls')),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

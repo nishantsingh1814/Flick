@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 import time
 
+def get_image_path(instance, filename):
+    return 'images/{0}_{1}'.format(str(time.time()).replace('.', ''), filename)
+
 class BaseModel(models.Model):
     """
     Base parent model for all the models
@@ -31,6 +34,7 @@ class Groups(BaseModel):
     member_count = models.IntegerField(default=0)
     image_count = models.IntegerField(default=0)
     description = models.TextField(blank=True)
+    icon = models.ImageField(upload_to=get_image_path, null=True)
 
 class Photos(BaseModel):
     class Meta:
@@ -41,18 +45,13 @@ class Photos(BaseModel):
     description = models.TextField(blank=True)
     comments_count = models.IntegerField(default=0)
     views_count = models.IntegerField(default=0)
+    image = models.ImageField(upload_to=get_image_path, null=True)
 
-class PhotoUrls(BaseModel):
-    class Meta:
-        db_table = 'photo_urls'
-    photo = models.ForeignKey(Photos, on_delete = models.CASCADE)
-    url = models.TextField(blank=True)
-    size = models.CharField(max_length=30)
 
 class PhotoTags(BaseModel):
     class Meta:
         db_table = 'photo_tags'
-    photo = models.ForeignKey(Photos, on_delete = models.CASCADE)
+    photo = models.ForeignKey(Photos, related_name='tags', on_delete = models.CASCADE)
     tag = models.TextField(blank=True)
 
 class GroupPhotos(BaseModel):

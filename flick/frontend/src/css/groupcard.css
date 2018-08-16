@@ -1,0 +1,39 @@
+#group_card{
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  position: relative;
+  background: #fff;
+  box-shadow: 5px 5px 25px 0 rgba(46,61,73,.2);
+  border-radius: .375rem;
+  transition: all .3s ease;
+}
+
+.strong{
+  font-weight: 600;
+}
+.heading{
+  color: #2e3d49;
+}
+
+.secondary{
+  color: #02ccba;
+}
+#desc{
+      width: 100%;
+      padding: 24px 20px;
+      box-sizing: inherit;
+}
+
+#card_content{
+  padding: 16px 8px;
+  width: 100%;
+}
+#mainContent
+{
+  margin:auto;
+}
+#image_content{
+  float: left;
+  margin-right: .75rem;
+}

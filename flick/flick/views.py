@@ -22,6 +22,7 @@ from .models import Groups, Photos, PhotoTags, GroupPhotos, User
 from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer
 from rest_framework.authtoken.models import Token
 from .signals import user_password_update
+from .tasks import update_user_clicks
 
 class SignUp(APIView):
     authentication_classes = []
@@ -43,8 +44,6 @@ class SignUp(APIView):
             except User.DoesNotExist:
                 user = User.objects.create(user_name=user_name,password=password)
                 response = {'status': status.HTTP_200_OK, 'message': 'success'}
-
-
 
         except ValueError as err:
             response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
@@ -119,7 +118,8 @@ class PaginationAPIView(APIView):
 
 
 class DownloadGroups(APIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         try:
@@ -191,7 +191,8 @@ def get_photo_size(id):
     return r.json()
 
 class GetGroupPhotos(APIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         try:
@@ -261,7 +262,8 @@ def get_photo_info(id):
     return r.json()
 
 class PhotoInfo(APIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         photos = Photos.objects.all()
@@ -277,10 +279,14 @@ class PhotoInfo(APIView):
                 phototags = PhotoTags.objects.create(photo=photo, tag=tag['_content'])
                 print(phototags)
         response = {'status': status.HTTP_200_OK, 'message': 'Image Info added'}
+        user = request.user
+        token = Token.objects.get(user_id=user.id)
+        update_user_clicks.delay(user, token.key)
         return Response(response, status=response['status'])
 
 class GetGroups(PaginationAPIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         try:
@@ -294,7 +300,8 @@ class GetGroups(PaginationAPIView):
         return Response(response, status=response['status'])
 
 class GetPhotos(PaginationAPIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         try:
@@ -310,10 +317,14 @@ class GetPhotos(PaginationAPIView):
             response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
+        user = request.user
+        token = Token.objects.get(user_id=user.id)
+        update_user_clicks.delay(user, token.key)
         return Response(response, status=response['status'])
 
 class GetPhotoInfo(APIView):
-
+    authentication_classes = []
+    permission_classes = []
     def get(self, request, format=None):
 
         try:
@@ -327,4 +338,7 @@ class GetPhotoInfo(APIView):
             response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
+        user = request.user
+        token = Token.objects.get(user_id=user.id)
+        update_user_clicks.delay(user, token.key)
         return Response(response, status=response['status'])

@@ -75,6 +75,16 @@ class GroupPhotos(BaseModel):
     group = models.ForeignKey(Groups, on_delete = models.CASCADE )
     photo = models.ForeignKey(Photos, on_delete = models.CASCADE )
 
+class Analytics(BaseModel):
+    class Meta:
+        db_table = 'analytics'
+
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    token = models.CharField(max_length=255, null =False, default=None)
+    click = models.IntegerField(default=0)
+
+
+
 @receiver(user_password_update)
 def create_auth_token(sender, instance=None, **kwargs):
     token = Token.objects.filter(user=instance).delete()

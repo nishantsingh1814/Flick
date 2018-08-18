@@ -20,7 +20,8 @@ class ImageDataProvider extends Component {
   onPaginatedSearch =()=>{
     this.setState({ isLoading:true});
     if(this.state.endpoint!=null){
-    fetch(this.state.endpoint)
+    fetch(this.state.endpoint,{method: 'get',
+   headers: {'Authorization':`Token ${localStorage.getItem('Token')}`},})
       .then(response => {
         if (response.status !== 200) {
           return this.setState({ placeholder: "Something went wrong" , isLoading:false});

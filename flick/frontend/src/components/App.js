@@ -7,7 +7,38 @@ import LoginForm from './Auth/LoginForm';
 import SignUpForm from './Auth/SignUpForm';
 
 import Gallery from '../components/Gallery/Gallery';
+import Photo from '../components/Photo/Photo';
 import configureStore from '../store';
+
+import HeaderLayout from "../layouts/header";
+import PublicLayout from "../layouts/public";
+
+
+const HeaderRoute = ({component: Component, ...rest}) => {
+    return (
+        <Route
+            {...rest}
+            render={matchProps => (
+                <HeaderLayout>
+                    <Component {...matchProps} />
+                </HeaderLayout>
+            )}
+        />
+    );
+};
+
+const PublicLayoutRoute = ({component: Component, ...rest}) => {
+    return (
+        <Route
+            {...rest}
+            render={matchProps => (
+                <PublicLayout>
+                    <Component {...matchProps} />
+                </PublicLayout>
+            )}
+        />
+    );
+};
 
 class App extends Component{
   render(){
@@ -17,10 +48,12 @@ class App extends Component{
             <Route exact path="/">
                 <Redirect to="/login"/>
             </Route>
-            <Route exact path="/group" component={Group}/>
-            <Route exact path="/login" component={LoginForm}/>
-            <Route exact path="/gallery/:id" component={Gallery}/>
-            <Route exact path="/signup" component={SignUpForm}/>
+            <HeaderRoute exact path="/group" component={Group}/>
+            <HeaderRoute exact path="/photo/:id" component={Photo}/>
+
+            <PublicLayoutRoute exact path="/login" component={LoginForm}/>
+            <HeaderRoute exact path="/gallery/:id" component={Gallery}/>
+            <PublicLayoutRoute exact path="/signup" component={SignUpForm}/>
 
         </Switch>
       </BrowserRouter>

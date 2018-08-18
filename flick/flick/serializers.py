@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Groups, Photos, PhotoTags, GroupPhotos
+from .models import Groups, Photos, PhotoTags, GroupPhotos,  Analytics
 
 
 class GroupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Groups
         fields = ('id', 'name', 'member_count', 'image_count', 'description', 'icon')
@@ -25,3 +26,9 @@ class GroupPhotosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Groups
         fields = ('id', 'photo')
+
+class AnalyticsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Analytics
+        fields = ('click',)

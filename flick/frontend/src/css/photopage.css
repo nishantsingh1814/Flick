@@ -1,0 +1,16 @@
+#title-des{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 1px;
+    background: #fff;
+    margin-left: 3%;
+    padding: 2%;
+    margin-right: 3%;
+}
+
+#tag{
+  margin:1%;
+}
+#tag-list{
+  width:30%;
+}

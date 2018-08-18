@@ -18,8 +18,8 @@ from rest_framework import serializers
 from rest_framework.settings import api_settings
 
 
-from .models import Groups, Photos, PhotoTags, GroupPhotos, User
-from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer
+from .models import Groups, Photos, PhotoTags, GroupPhotos, User, Analytics
+from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer, AnalyticsSerializer
 from rest_framework.authtoken.models import Token
 from .signals import user_password_update
 from .tasks import update_user_clicks
@@ -56,8 +56,8 @@ class Login(APIView):
     def post(self, request, format=None):
         try:
             data = request.data.dict()
-            user_name = data.pop('user_name')
-            password = data.pop('password')
+            user_name = data.pop('user_name', None)
+            password = data.pop('password', None)
 
             if not user_name:
                 raise ValueError('Username not found')
@@ -279,32 +279,36 @@ class PhotoInfo(APIView):
                 phototags = PhotoTags.objects.create(photo=photo, tag=tag['_content'])
                 print(phototags)
         response = {'status': status.HTTP_200_OK, 'message': 'Image Info added'}
-        user = request.user
-        token = Token.objects.get(user_id=user.id)
-        update_user_clicks.delay(user, token.key)
+
         return Response(response, status=response['status'])
 
 class GetGroups(PaginationAPIView):
-    authentication_classes = []
-    permission_classes = []
+
     def get(self, request, format=None):
 
         try:
+            user = request.user
+            token = Token.objects.get(user=user)
+            update_user_clicks.delay(user.id, token.key)
             groups = Groups.objects.all()
             page = self.paginate_queryset(groups)
             if page is not None:
                 serializer = GroupSerializer(page, context={"request": request}, many=True)
+
                 return self.get_paginated_response(serializer.data)
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
+
         return Response(response, status=response['status'])
 
 class GetPhotos(PaginationAPIView):
-    authentication_classes = []
-    permission_classes = []
+
     def get(self, request, format=None):
 
         try:
+            user = request.user
+            token = Token.objects.get(user=user)
+            update_user_clicks.delay(user.id, token.key)
             groupId = request.GET.get('group_id',None)
             if not groupId:
                 raise ValueError('group_id not found')
@@ -317,28 +321,41 @@ class GetPhotos(PaginationAPIView):
             response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
-        user = request.user
-        token = Token.objects.get(user_id=user.id)
-        update_user_clicks.delay(user, token.key)
+
         return Response(response, status=response['status'])
 
 class GetPhotoInfo(APIView):
-    authentication_classes = []
-    permission_classes = []
+
     def get(self, request, format=None):
 
         try:
+            user = request.user
+            token = Token.objects.get(user=user)
+            update_user_clicks.delay(user.id, token.key)
             photo_id = request.GET.get('photo_id', None)
-            if not groupId:
+            if not photo_id:
                 raise ValueError('photo_id not found')
-            photo = Photos.objects.filter(id=photo_id)
+            photo = Photos.objects.get(id=photo_id)
+
             serializer = PhotoSerializer(photo,context = {"request": request})
             response = {'status': status.HTTP_200_OK, 'data': serializer.data}
         except ValueError as err:
             response = {'status': status.HTTP_400_BAD_REQUEST, 'error_message': str(err)}
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
-        user = request.user
-        token = Token.objects.get(user_id=user.id)
-        update_user_clicks.delay(user, token.key)
+
+        return Response(response, status=response['status'])
+
+class UserSessionCalls(APIView):
+
+    def get(self, request, format=None):
+        try:
+            user = request.user
+            analytics = Analytics.objects.filter(user=user)
+            serializer = AnalyticsSerializer(analytics, many=True)
+            response = {'status': status.HTTP_200_OK, 'data': serializer.data}
+
+        except RuntimeError as err:
+            response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
+
         return Response(response, status=response['status'])

@@ -7,21 +7,17 @@ class ImageList extends Component{
     super(props)
   }
   updateImages=()=>{
-    console.log("knb")
+
     return  this.props.images.map((image, index) => {
-      console.log(index);
       return(
-        <div>
           <Image
             photo={image.photo}
-            key={index}
+            key={image.id}
           />
-        </div>
       );
     });
   }
   createColumns= () =>{
-    console.log("col")
     let imageItems= this.updateImages();
     let imagesFirst = [];
     let imagesSec = [];

@@ -1,6 +1,11 @@
 import React, {Component} from "react";
 import ReactDOM from 'react-dom';
 import '../../css/groupcard.css';
+import Icon from './Icon';
+import ImageCount from './ImageCount';
+import MemberCount from './MemberCount';
+import Description from './Description';
+import Name from './Name';
 
 import {Link} from 'react-router-dom';
 
@@ -8,18 +13,13 @@ import {Link} from 'react-router-dom';
 
 const GroupCard = ({group}) => {
   return(
-    <Link to={`/gallery/${group.id}`}>
+    <Link className="group_links" to={`/gallery/${group.id}`}>
       <div id="group_card">
-        <div id='card_content'>
-          <div id = 'image_content'>
-          <img src = {group.icon}/>
-          </div>
-          <div id="desc">
-            <p className="strong slate">{group.name}</p>
-            <h6 className="secondary">{group.member_count}</h6>
-            <h6 className="secondary">{group.image_count}</h6>
-          </div>
-        </div>
+        <Icon url = {group.icon}/>
+        <Name name={group.name}/>
+        <MemberCount count={group.member_count}/>
+        <ImageCount count={group.image_count}/>
+        <Description description = {group.description}/>
       </div>
     </Link>
   );

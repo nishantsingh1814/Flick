@@ -1,6 +1,7 @@
 import React from "react";
 import GroupCard from "./GroupCard";
 
+
 const GroupList = ({data}) => {
     const groupItems = data.results.map((group, index) => {
         return (
@@ -11,7 +12,7 @@ const GroupList = ({data}) => {
         );
     });
     return (
-        <div>
+        <div id="group-container">
             {groupItems}
         </div>
     );

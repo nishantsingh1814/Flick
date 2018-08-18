@@ -1,9 +1,9 @@
 #group_card{
-  margin-left: 20%;
-  margin-right: 20%;
+
   margin-bottom: 1.5em;
   position: relative;
   background: #fff;
+  padding: 16px 8px;
   box-shadow: 0px 5px 50px 0 #17a2b8;
   border-radius: 2px;
   transition: all .3s ease
@@ -15,20 +15,16 @@
 .heading{
   color: #2e3d49;
 }
-
+.group_links { color: inherit; }
+a:hover{
+    text-decoration: none;
+}
 .secondary{
   color: #02ccba;
-}
-#desc{
-      width: 100%;
-      padding: 24px 20px;
-      box-sizing: inherit;
+  text-decoration: none;
 }
 
-#card_content{
-  padding: 16px 8px;
-  width: 100%;
-}
+
 #mainContent
 {
   margin:auto;
@@ -36,4 +32,9 @@
 #image_content{
   float: left;
   margin-right: .75rem;
+}
+
+#group-container{
+  margin-left: 20%;
+  margin-right: 20%;
 }

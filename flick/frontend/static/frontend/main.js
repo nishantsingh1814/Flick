@@ -230,6 +230,18 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
+/***/ "./flick/frontend/src/components/Group/Description.js":
+/*!************************************************************!*\
+  !*** ./flick/frontend/src/components/Group/Description.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar Description = function Description(_ref) {\n  var description = _ref.description;\n\n  return _react2.default.createElement(\n    'p',\n    null,\n    description.substring(0, 100),\n    '...'\n  );\n};\n\nexports.default = Description;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/Description.js?");
+
+/***/ }),
+
 /***/ "./flick/frontend/src/components/Group/Group.js":
 /*!******************************************************!*\
   !*** ./flick/frontend/src/components/Group/Group.js ***!
@@ -250,7 +262,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\n__webpack_require__(/*! ../../css/groupcard.css */ \"./flick/frontend/src/css/groupcard.css\");\n\nvar _reactRouterDom = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar GroupCard = function GroupCard(_ref) {\n  var group = _ref.group;\n\n  return _react2.default.createElement(\n    _reactRouterDom.Link,\n    { to: '/gallery/' + group.id },\n    _react2.default.createElement(\n      'div',\n      { id: 'group_card' },\n      _react2.default.createElement(\n        'div',\n        { id: 'card_content' },\n        _react2.default.createElement(\n          'div',\n          { id: 'image_content' },\n          _react2.default.createElement('img', { src: group.icon })\n        ),\n        _react2.default.createElement(\n          'div',\n          { id: 'desc' },\n          _react2.default.createElement(\n            'p',\n            { className: 'strong slate' },\n            group.name\n          ),\n          _react2.default.createElement(\n            'h6',\n            { className: 'secondary' },\n            group.member_count\n          ),\n          _react2.default.createElement(\n            'h6',\n            { className: 'secondary' },\n            group.image_count\n          )\n        )\n      )\n    )\n  );\n};\n\nexports.default = GroupCard;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/GroupCard.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\n__webpack_require__(/*! ../../css/groupcard.css */ \"./flick/frontend/src/css/groupcard.css\");\n\nvar _Icon = __webpack_require__(/*! ./Icon */ \"./flick/frontend/src/components/Group/Icon.js\");\n\nvar _Icon2 = _interopRequireDefault(_Icon);\n\nvar _ImageCount = __webpack_require__(/*! ./ImageCount */ \"./flick/frontend/src/components/Group/ImageCount.js\");\n\nvar _ImageCount2 = _interopRequireDefault(_ImageCount);\n\nvar _MemberCount = __webpack_require__(/*! ./MemberCount */ \"./flick/frontend/src/components/Group/MemberCount.js\");\n\nvar _MemberCount2 = _interopRequireDefault(_MemberCount);\n\nvar _Description = __webpack_require__(/*! ./Description */ \"./flick/frontend/src/components/Group/Description.js\");\n\nvar _Description2 = _interopRequireDefault(_Description);\n\nvar _Name = __webpack_require__(/*! ./Name */ \"./flick/frontend/src/components/Group/Name.js\");\n\nvar _Name2 = _interopRequireDefault(_Name);\n\nvar _reactRouterDom = __webpack_require__(/*! react-router-dom */ \"./node_modules/react-router-dom/es/index.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar GroupCard = function GroupCard(_ref) {\n  var group = _ref.group;\n\n  return _react2.default.createElement(\n    _reactRouterDom.Link,\n    { className: 'group_links', to: '/gallery/' + group.id },\n    _react2.default.createElement(\n      'div',\n      { id: 'group_card' },\n      _react2.default.createElement(_Icon2.default, { url: group.icon }),\n      _react2.default.createElement(_Name2.default, { name: group.name }),\n      _react2.default.createElement(_MemberCount2.default, { count: group.member_count }),\n      _react2.default.createElement(_ImageCount2.default, { count: group.image_count }),\n      _react2.default.createElement(_Description2.default, { description: group.description })\n    )\n  );\n};\n\nexports.default = GroupCard;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/GroupCard.js?");
 
 /***/ }),
 
@@ -274,7 +286,55 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _GroupCard = __webpack_require__(/*! ./GroupCard */ \"./flick/frontend/src/components/Group/GroupCard.js\");\n\nvar _GroupCard2 = _interopRequireDefault(_GroupCard);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar GroupList = function GroupList(_ref) {\n    var data = _ref.data;\n\n    var groupItems = data.results.map(function (group, index) {\n        return _react2.default.createElement(_GroupCard2.default, {\n            group: group,\n            key: index\n        });\n    });\n    return _react2.default.createElement(\n        \"div\",\n        null,\n        groupItems\n    );\n};\n\nexports.default = GroupList;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/GroupList.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _GroupCard = __webpack_require__(/*! ./GroupCard */ \"./flick/frontend/src/components/Group/GroupCard.js\");\n\nvar _GroupCard2 = _interopRequireDefault(_GroupCard);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar GroupList = function GroupList(_ref) {\n    var data = _ref.data;\n\n    var groupItems = data.results.map(function (group, index) {\n        return _react2.default.createElement(_GroupCard2.default, {\n            group: group,\n            key: index\n        });\n    });\n    return _react2.default.createElement(\n        \"div\",\n        { id: \"group-container\" },\n        groupItems\n    );\n};\n\nexports.default = GroupList;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/GroupList.js?");
+
+/***/ }),
+
+/***/ "./flick/frontend/src/components/Group/Icon.js":
+/*!*****************************************************!*\
+  !*** ./flick/frontend/src/components/Group/Icon.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar Icon = function Icon(_ref) {\n  var url = _ref.url;\n\n  return _react2.default.createElement('img', { src: url });\n};\nexports.default = Icon;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/Icon.js?");
+
+/***/ }),
+
+/***/ "./flick/frontend/src/components/Group/ImageCount.js":
+/*!***********************************************************!*\
+  !*** ./flick/frontend/src/components/Group/ImageCount.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar style = {\n  margin: 10\n};\nvar ImageCount = function ImageCount(_ref) {\n  var count = _ref.count;\n\n  return _react2.default.createElement(\n    'b',\n    { style: style },\n    count,\n    ' images'\n  );\n};\n\nexports.default = ImageCount;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/ImageCount.js?");
+
+/***/ }),
+
+/***/ "./flick/frontend/src/components/Group/MemberCount.js":
+/*!************************************************************!*\
+  !*** ./flick/frontend/src/components/Group/MemberCount.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar MemberCount = function MemberCount(_ref) {\n  var count = _ref.count;\n\n  return _react2.default.createElement(\n    'b',\n    null,\n    count,\n    ' members'\n  );\n};\n\nexports.default = MemberCount;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/MemberCount.js?");
+
+/***/ }),
+
+/***/ "./flick/frontend/src/components/Group/Name.js":
+/*!*****************************************************!*\
+  !*** ./flick/frontend/src/components/Group/Name.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar Name = function Name(_ref) {\n  var name = _ref.name;\n\n  return _react2.default.createElement(\n    \"p\",\n    { className: \"strong slate\" },\n    name\n  );\n};\n\nexports.default = Name;\n\n//# sourceURL=webpack:///./flick/frontend/src/components/Group/Name.js?");
 
 /***/ }),
 
@@ -1695,7 +1755,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"#group_card{\\n  margin-left: 20%;\\n  margin-right: 20%;\\n  margin-bottom: 1.5em;\\n  position: relative;\\n  background: #fff;\\n  box-shadow: 0px 5px 50px 0 #17a2b8;\\n  border-radius: 2px;\\n  transition: all .3s ease\\n}\\n\\n.strong{\\n  font-weight: 600;\\n}\\n.heading{\\n  color: #2e3d49;\\n}\\n\\n.secondary{\\n  color: #02ccba;\\n}\\n#desc{\\n      width: 100%;\\n      padding: 24px 20px;\\n      box-sizing: inherit;\\n}\\n\\n#card_content{\\n  padding: 16px 8px;\\n  width: 100%;\\n}\\n#mainContent\\n{\\n  margin:auto;\\n}\\n#image_content{\\n  float: left;\\n  margin-right: .75rem;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./flick/frontend/src/css/groupcard.css?./node_modules/css-loader");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"#group_card{\\n\\n  margin-bottom: 1.5em;\\n  position: relative;\\n  background: #fff;\\n  padding: 16px 8px;\\n  box-shadow: 0px 5px 50px 0 #17a2b8;\\n  border-radius: 2px;\\n  transition: all .3s ease\\n}\\n\\n.strong{\\n  font-weight: 600;\\n}\\n.heading{\\n  color: #2e3d49;\\n}\\n.group_links { color: inherit; }\\na:hover{\\n    text-decoration: none;\\n}\\n.secondary{\\n  color: #02ccba;\\n  text-decoration: none;\\n}\\n\\n\\n#mainContent\\n{\\n  margin:auto;\\n}\\n#image_content{\\n  float: left;\\n  margin-right: .75rem;\\n}\\n\\n#group-container{\\n  margin-left: 20%;\\n  margin-right: 20%;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./flick/frontend/src/css/groupcard.css?./node_modules/css-loader");
 
 /***/ }),
 

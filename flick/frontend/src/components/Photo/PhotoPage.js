@@ -10,20 +10,17 @@ import '../../css/photopage.css';
 
 const PhotoPage = ({data}) => {
     return (
-        <div id="mainContent" >
+        <div >
           <PlaceHolder
             url={data.image}
             />
-          <Owner owner={data.owner}/>
-          <br/>
-          <div id="title-des">
+          <div id="title-des" >
+            <Owner owner={data.owner}/>
+            <br/>
             <Title title={data.title}/>
             <br/>
             <Description description={data.description}/>
-          </div>
-          <div>
-
-            <div >
+            <div>
               <CommentCount count={data.comments_count}/>
               <ViewCount count={data.views_count}/>
             </div>

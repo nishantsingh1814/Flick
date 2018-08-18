@@ -11,7 +11,7 @@ const GroupList = ({data}) => {
         );
     });
     return (
-        <div id="mainContent" >
+        <div>
             {groupItems}
         </div>
     );

@@ -3,10 +3,11 @@ body{
   background: #2c3338;
   color: #606468;
   margin: auto;
-
+  height: 100%;
 }
 html{
   background: #2c3338;
+  height:100%;
 }
 
 input{

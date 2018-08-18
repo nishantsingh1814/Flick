@@ -1,11 +1,11 @@
 import React from 'react';
 
-
+const style={
+  margin:10
+}
 const ViewCount = ({count}) => {
   return (
-    <div>
-      <p>{count}</p>
-    </div>
+      <b style={style}>{count} Views</b>
   )
 };
 

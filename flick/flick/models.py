@@ -57,10 +57,11 @@ class Photos(BaseModel):
     flickr_id = models.CharField(max_length=30, blank=False, null=False)
     owner = models.CharField(max_length=255, null =True, default=None)
     title = models.CharField(max_length=255, null =True, default=None)
-    description = models.TextField(blank=True)
-    comments_count = models.IntegerField(default=0)
-    views_count = models.IntegerField(default=0)
     image = models.ImageField(upload_to=get_image_path, null=True)
+    secret = models.CharField(max_length=30, null =True, default=None)
+    farm = models.CharField(max_length=30, null =True, default=None)
+    server = models.CharField(max_length=30, null =True, default=None)
+    date = models.IntegerField(default=0)
 
 
 class PhotoTags(BaseModel):
@@ -68,6 +69,14 @@ class PhotoTags(BaseModel):
         db_table = 'photo_tags'
     photo = models.ForeignKey(Photos, related_name='tags', on_delete = models.CASCADE)
     tag = models.TextField(blank=True)
+
+class PhotoDetails(BaseModel):
+    class Meta:
+        db_table = 'photo_details'
+    photo = models.ForeignKey(Photos, related_name='details', on_delete = models.CASCADE)
+    description = models.TextField(blank=True)
+    comments_count = models.IntegerField(default=0)
+    views_count = models.IntegerField(default=0)
 
 class GroupPhotos(BaseModel):
     class Meta:

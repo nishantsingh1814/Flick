@@ -52,7 +52,7 @@ class ImageList extends Component{
 
   onScroll = () => {
     if (
-      (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+    (window.innerHeight + window.scrollY==document.body.scrollHeight)&&
       this.props.images.length && !this.props.isLoading
     ) {
       this.props.onPaginatedSearch();

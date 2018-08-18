@@ -9,3 +9,8 @@
 #gallery-img {
     margin: 5px;
 }
+.img-background{
+  width:260px;
+  height:100px;
+  background: url(https://vignette.wikia.nocookie.net/the-darkest-minds/images/4/47/Placeholder.png/revision/latest?cb=20160927044640) no-repeat scroll 0 0;
+}

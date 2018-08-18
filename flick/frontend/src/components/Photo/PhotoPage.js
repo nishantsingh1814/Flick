@@ -19,10 +19,10 @@ const PhotoPage = ({data}) => {
             <br/>
             <Title title={data.title}/>
             <br/>
-            <Description description={data.description}/>
+            <Description description={data.details[0].description}/>
             <div>
-              <CommentCount count={data.comments_count}/>
-              <ViewCount count={data.views_count}/>
+              <CommentCount count={data.details[0].comments_count}/>
+              <ViewCount count={data.details[0].views_count}/>
             </div>
             <TagList tags={data.tags}/>
           </div>

@@ -22,7 +22,7 @@ from .models import Groups, Photos, PhotoTags, GroupPhotos, User, Analytics
 from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer, AnalyticsSerializer
 from rest_framework.authtoken.models import Token
 from .signals import user_password_update
-from .tasks import update_user_clicks
+from .tasks import update_user_clicks, get_group_photos_ids
 
 class SignUp(APIView):
     authentication_classes = []
@@ -86,7 +86,6 @@ class PaginationAPIView(APIView):
     APIView to be used for paginated responses
     """
 
-    # The style to use for queryset pagination.
     pagination_class = api_settings.DEFAULT_PAGINATION_CLASS
 
     @property
@@ -121,9 +120,9 @@ class DownloadGroups(APIView):
     authentication_classes = []
     permission_classes = []
     def get(self, request, format=None):
-
+#, '1135960@N20','52240714666@N01','78842177@N00','12512756@N00'
         try:
-            groupIds = ['694160@N25', '1135960@N20','52240714666@N01','78842177@N00','12512756@N00']
+            groupIds = ['694160@N25']
             for groupId in groupIds:
                 payload = {'method':'flickr.groups.getInfo',
                 'api_key':GlobalSettings.FLICKR_API_KEY,
@@ -132,7 +131,7 @@ class DownloadGroups(APIView):
                 'nojsoncallback':1
                 }
                 r = requests.get(GlobalSettings.FLICKR_BASE_URL, params=payload)
-                print(r.json())
+
                 data = r.json()['group']
                 name = data['name']['_content']
                 flickr_id = data['id']
@@ -142,8 +141,8 @@ class DownloadGroups(APIView):
 
 
                 group = Groups.objects.create(name = name, flickr_id = flickr_id, member_count = member_count, image_count = image_count, description = description )
+                get_group_photos_ids.delay(flickr_id, group.id)
                 url = 'http://farm'+str(data['iconfarm'])+'.staticflickr.com/'+str(data['iconserver'])+'/buddyicons/'+str(data['nsid'])+'.jpg'
-                print(group.id)
                 result = requests.get(url, stream=True)
                 if result.status_code == requests.codes.ok:
                     lf = tempfile.NamedTemporaryFile()
@@ -155,8 +154,6 @@ class DownloadGroups(APIView):
 
                         lf.write(block)
                     group.icon.save(file_name, files.File(lf))
-
-
 
             response = {'status': status.HTTP_200_OK, 'data': 'groups downloaded'}
         except ValueError as err:
@@ -218,7 +215,6 @@ class GetGroupPhotos(APIView):
 
                         lf.write(block)
                     photo.image.save(file_name, files.File(lf))
-                print(photo)
                 GroupPhotos.objects.create(group = group, photo = photo)
 
             if pages > 1:

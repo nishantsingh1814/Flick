@@ -14,17 +14,37 @@ class Image extends Component{
   render(){
     if(this.state.imageLoaded){
       return(
-        <Link key={this.props.photo.id} to={`/photo/${this.props.photo.id}`}>
-            <div >
-              <img id="gallery-img" src = {this.props.photo.image} onLoad={this.handleImageimageLoaded.bind(this)} className="img-fluid"/>
+        <Link className="image_links" key={this.props.photo.id} to={`/photo/${this.props.photo.id}`}>
+            <div className="image-card">
+              <div className="content-container">
+                <h4><b>{this.props.photo.owner}</b></h4>
+                <p>{this.props.photo.title}</p>
+              </div>
+              <img  src = {this.props.photo.image} onLoad={this.handleImageimageLoaded.bind(this)} className="img-fluid"/>
+              {this.props.photo.details[0]&&
+                <div className="content-container">
+                  <p>{this.props.photo.details[0].comments_count} comments </p>
+                  <p>{this.props.photo.details[0].views_count} views</p>
+                </div>
+              }
             </div>
         </Link>
       )
     }
     return(
-      <Link key={this.props.photo.id} to={`/photo/${this.props.photo.id}`}>
-          <div >
-            <img id="gallery-img" src = {this.props.photo.image} onLoad={this.handleImageimageLoaded.bind(this)} className="img-fluid img-background"/>
+      <Link className="image_links" key={this.props.photo.id} to={`/photo/${this.props.photo.id}`}>
+          <div className="image-card">
+            <div className="content-container">
+              <h4><b>{this.props.photo.owner}</b></h4>
+              <p>{this.props.photo.title}</p>
+            </div>
+            <img  src = {this.props.photo.image} onLoad={this.handleImageimageLoaded.bind(this)} className="img-fluid img-background"/>
+            {this.props.photo.details[0]&&
+              <div className="content-container">
+                <p>{this.props.photo.details[0].comments_count} comments </p>
+                <p>{this.props.photo.details[0].views_count} views</p>
+              </div>
+            }
           </div>
       </Link>
     )

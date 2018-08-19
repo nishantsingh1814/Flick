@@ -11,7 +11,6 @@ const UserSession=({data}) =>{
     text.y=data[i].click;
     sessionCalls.push(text);
   }
-  console.log(sessionCalls);
   return(
     <div id="user-session-chart">
       <LineChart
@@ -21,9 +20,10 @@ const UserSession=({data}) =>{
         width={700}
         height={350}
         verticalGrid
-        axisLabels={{x: 'Sessions', y: 'Calls'}}
+        axisLabels={{x: 'My x Axis', y: 'My y Axis'}}
         data={[sessionCalls]}
       />
+    <h3>No. of calls made by user in each session</h3>
     </div>
   )
 }

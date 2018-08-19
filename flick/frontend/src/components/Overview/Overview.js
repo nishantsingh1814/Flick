@@ -2,12 +2,17 @@ import React, {Component} from "react";
 
 import OverviewDataProvider from './OverviewDataProvider';
 import UserSession from './UserSession';
+import PhotoCommentsChart from './PhotoCommentsChart';
 
 
 const Overview = (props) =>{
   return(
-    <OverviewDataProvider endpoint={`/usercalls`}
-                  render={(data) => <UserSession data={data} />} />
+    <div>
+      <OverviewDataProvider endpoint={`/usercalls`}
+                    render={(data) => <UserSession data={data} />} />
+      <OverviewDataProvider endpoint={`/topphotos`}
+                    render={(data) => <PhotoCommentsChart data={data} />} />
+    </div>
   )
 }
 

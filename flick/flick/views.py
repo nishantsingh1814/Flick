@@ -9,6 +9,7 @@ from django.core import files
 from django.shortcuts import render
 from django.conf import settings as GlobalSettings
 from django.db import connections
+from django.db.models import Sum
 
 
 from rest_framework.views import APIView
@@ -18,7 +19,7 @@ from rest_framework import serializers
 from rest_framework.settings import api_settings
 
 
-from .models import Groups, Photos, PhotoTags, GroupPhotos, User, Analytics
+from .models import Groups, Photos, PhotoTags, GroupPhotos, User, Analytics, PhotoDetails
 from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer, AnalyticsSerializer
 from rest_framework.authtoken.models import Token
 from .signals import user_password_update
@@ -350,6 +351,31 @@ class UserSessionCalls(APIView):
             analytics = Analytics.objects.filter(user=user)
             serializer = AnalyticsSerializer(analytics, many=True)
             response = {'status': status.HTTP_200_OK, 'data': serializer.data}
+
+        except RuntimeError as err:
+            response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}
+
+        return Response(response, status=response['status'])
+
+class TopPhotos(APIView):
+
+    def get(self, request, format=None):
+
+        try:
+            topPhotos = PhotoDetails.objects.order_by('-comments_count')[:9]
+            otherPhotosSum = PhotoDetails.objects.aggregate(Sum('comments_count'))
+            list = []
+            for photo in topPhotos:
+                obj = {}
+                obj['photo_id'] = photo.photo_id
+                obj['comments_count'] = photo.comments_count
+                list.append(obj)
+
+            obj = {}
+
+            obj['comments_count'] =otherPhotosSum['comments_count__sum']
+            list.append(obj)
+            response = {'status': status.HTTP_200_OK, 'data': json.loads(json.dumps(list))}
 
         except RuntimeError as err:
             response = {'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'error_message': str(err)}

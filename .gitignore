@@ -13,7 +13,7 @@ tests/.coverage
 build/
 tests/report/
 env/
-settings.py
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

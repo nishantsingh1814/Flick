@@ -1,4 +1,6 @@
 #!/bin/bash
+cd ..
+cd ..
 export FLICK_PATH=$(pwd)
 
 cd $FLICK_PATH/Flick

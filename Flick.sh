@@ -57,7 +57,7 @@ pip3 install -r requirements.txt
 
 cd flick
 
-python manage.py migrate
+python3 manage.py migrate
 
 sudo supervisorctl reread
 sudo supervisorctl update

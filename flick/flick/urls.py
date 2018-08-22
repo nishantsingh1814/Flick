@@ -30,5 +30,4 @@ urlpatterns = [
     path('getphotoinfo', GetPhotoInfo.as_view()),
     path('usercalls', UserSessionCalls.as_view()),
     path('topphotos', TopPhotos.as_view()),
-
 ]

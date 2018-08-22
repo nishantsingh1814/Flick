@@ -4,21 +4,22 @@ import time
 from django.contrib.auth.models import(
     BaseUserManager, AbstractBaseUser
 )
+from django.conf import settings
 from .signals import user_password_update
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-
+from django.contrib.auth.models import User
 def get_image_path(instance, filename):
     return 'images/{0}_{1}'.format(str(time.time()).replace('.', ''), filename)
 
-class User(AbstractBaseUser):
-
-    class Meta:
-        db_table = 'user'
-
-    user_name = models.CharField(max_length=17, unique=True)
-    password = models.CharField(max_length=100, blank=False, null=False)
-    USERNAME_FIELD = 'user_name'
+# class User(AbstractBaseUser):
+#
+#     class Meta:
+#         db_table = 'user'
+#
+#     user_name = models.CharField(max_length=17, unique=True)
+#     password = models.CharField(max_length=100, blank=False, null=False)
+#     USERNAME_FIELD = 'user_name'
 
 class BaseModel(models.Model):
     """
@@ -95,6 +96,6 @@ class Analytics(BaseModel):
 
 
 @receiver(user_password_update)
-def create_auth_token(sender, instance=None, **kwargs):
+def create_auth_token(sender=settings.AUTH_USER_MODEL, instance=None, **kwargs):
     token = Token.objects.filter(user=instance).delete()
     Token.objects.create(user=instance)

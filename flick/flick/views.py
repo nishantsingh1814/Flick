@@ -18,8 +18,8 @@ from rest_framework import status
 from rest_framework import serializers
 from rest_framework.settings import api_settings
 
-
-from .models import Groups, Photos, PhotoTags, GroupPhotos, User, Analytics, PhotoDetails
+from django.contrib.auth.models import User
+from .models import Groups, Photos, PhotoTags, GroupPhotos, Analytics, PhotoDetails
 from .serializers import GroupSerializer, PhotoSerializer, GroupPhotosSerializer, AnalyticsSerializer
 from rest_framework.authtoken.models import Token
 from .signals import user_password_update
@@ -39,11 +39,11 @@ class SignUp(APIView):
             if not password:
                 raise ValueError('Password not found')
             try:
-                user = User.objects.get(user_name=user_name)
+                user = User.objects.get(username=user_name)
                 if user:
                     raise ValueError('User already exists')
             except User.DoesNotExist:
-                user = User.objects.create(user_name=user_name,password=password)
+                user = User.objects.create(username=user_name,password=password)
                 response = {'status': status.HTTP_200_OK, 'message': 'success'}
 
         except ValueError as err:
@@ -64,7 +64,7 @@ class Login(APIView):
                 raise ValueError('Username not found')
             if not password:
                 raise ValueError('Password not found')
-            user = User.objects.get(user_name=user_name)
+            user = User.objects.get(username=user_name)
 
             if user:
                 if user.password == password:

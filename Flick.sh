@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export FLICK_PATH=$(pwd)
-
+sudo apt-get install curl
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 echo 'Installing git, Python 3, and pip...'

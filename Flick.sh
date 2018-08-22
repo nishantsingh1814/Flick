@@ -6,6 +6,8 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 echo 'Installing git, Python 3, and pip...'
 # libfreetype6-dev ziblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+git clone  https://github.com/nishantsingh1814/Flick.git
+
 sudo apt-get -yq install git python3.5.2 python3.5.2-dev libjpeg-dev libtiff5-dev zlib1g-dev > /dev/null 2>&1
 sudo apt-get -yq install python3-pip
 sudo apt-get -yq install curl
@@ -49,6 +51,7 @@ sudo cp src/redis-cli /usr/local/bin/
 cd ..
 
 cd Flick
+npm install
 if [ ! -d "env" ]; then
     virtualenv env
 fi

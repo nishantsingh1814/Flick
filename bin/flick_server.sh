@@ -3,6 +3,7 @@
 cd ..
 cd ..
 export FLICK_PATH=$(pwd)
+echo $FLICK_PATH
 cd $FLICK_PATH/Flick
 npm install
 npm run dev

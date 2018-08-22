@@ -1,7 +1,7 @@
 #!/bin/bash
 export FLICK_PATH=$(pwd)
 
-cd /home/vagrant/www/Flick
+cd $FLICK_PATH/Flick
 npm install
 npm run dev
 source $FLICK_PATH/Flick/env/bin/activate

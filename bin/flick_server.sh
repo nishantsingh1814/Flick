@@ -1,4 +1,6 @@
 #!/bin/bash
+export FLICK_PATH=$(pwd)
+
 cd /home/vagrant/www/Flick
 npm install
 npm run dev
